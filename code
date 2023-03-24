@@ -1,0 +1,83 @@
+#code for duo binary 
+n=int(input("Enter the number of bits: "))
+msg = []
+polar_f=[]
+sub1=[]    
+add=[]
+sub=[]
+decoding=[]
+decoding1=[]
+error=[]
+
+def D_Enc():
+    #substraction
+    for i in range(0,n):
+        if i==0:
+            diff = polar_f[0]
+            sub.append(diff)
+        else:
+            diff = add[i-1] - sub[i-1]
+            sub.append(diff)
+    print("Subtraction:",sub)
+
+    #decoding 
+    for i in sub:
+        if i==-1:
+            x=0
+        else:
+            x=1
+        decoding.append(x)
+    print("Decoded message bits: ",decoding)
+    
+def D_Enc_err():
+    pos=int(input("Enter the postion: "))
+    val=int(input("Enter the value: "))
+    for i in range(0,n-1):
+        add[pos]=val
+        error.append(add[i])
+    print("Error introduction: ",error)
+    #substraction
+    for i in range(0,n):
+        if i==0:
+            diff = polar_f[0]
+            sub1.append(diff)
+        else:
+            diff = error[i-1] - sub1[i-1]
+            sub1.append(diff)
+    print("Subtraction:",sub1)
+
+    #decoding 
+    for i in sub1:
+        if i==-1:
+            x=0
+        else:
+            x=1
+        decoding1.append(x)
+    print("Decoded message bits: ",decoding1)
+
+
+#reading msg bits
+z=input("Enter the message bits: ")
+for i in z:
+    msg.append(int(i))
+print(msg)
+
+#polar form
+for i in range(0,n):
+    if msg[i]==0:
+        x=-1
+    else:
+        x=1
+    polar_f.append(x)
+print("Message bits in polar form:",polar_f)
+
+#addition
+for i in range(0,n-1):
+    sum=polar_f[i]+polar_f[i+1]
+    add.append(sum)
+print("Addition:",add)
+
+D_Enc()
+D_Enc_err()
+
+
